@@ -7,6 +7,12 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "types": ["node"] // 👈 Thêm dòng này để TS hiểu các module node như fs
+    "types": ["node"],
+
+    // ✅ Thêm cấu hình alias
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   }
 }
