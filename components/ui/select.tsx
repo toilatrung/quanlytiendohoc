@@ -1,34 +1,23 @@
-// components/ui/select.tsx
-import { ReactNode } from "react";
-
-export function Select({ value, onValueChange, children }: {
-  value: string;
-  onValueChange: (val: string) => void;
-  children: ReactNode;
-}) {
+export function Select({ value, onValueChange, children }: any) {
   return (
-    <select
-      value={value}
-      onChange={(e) => onValueChange(e.target.value)}
-      className="border p-2 rounded"
-    >
+    <select value={value} onChange={(e) => onValueChange(e.target.value)}>
       {children}
     </select>
   );
 }
 
-export function SelectTrigger({ children }: { children: ReactNode }) {
+export function SelectTrigger({ children }: any) {
   return <>{children}</>;
 }
 
-export function SelectValue() {
-  return null;
+export function SelectValue({ placeholder }: { placeholder?: string }) {
+  return <option disabled>{placeholder}</option>;
 }
 
-export function SelectContent({ children }: { children: ReactNode }) {
-  return <>{children}</>;
-}
-
-export function SelectItem({ children, value }: { children: ReactNode; value: string }) {
+export function SelectItem({ children, value }: any) {
   return <option value={value}>{children}</option>;
+}
+
+export function SelectContent({ children }: any) {
+  return <>{children}</>;
 }
