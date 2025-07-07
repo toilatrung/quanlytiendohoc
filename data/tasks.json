@@ -1,0 +1,72 @@
+[
+  {
+    "STT": 1,
+    "TypeScript": "- Cài đặt môi trường, Hello World- Kiểu number, string, boolean (Có thể học nhanh - tương tự JS)- Union, Any, Void, Never (mới)",
+    "React": "- Ôn lại ES6+: Arrow, Destructuring, Spread, Modules- document.createElement() + ReactDOM",
+    "Deadline": 45846,
+    "Process": "Waiting"
+  },
+  {
+    "STT": "2",
+    "TypeScript": "- Array, Tuple, Enum (Có thể học nhanh)- Type annotation & inference",
+    "React": "- JSX là gì, JSX #1- JSX render array, JSX FAQ",
+    "Deadline": 45847,
+    "Process": "Waiting"
+  },
+  {
+    "STT": "3",
+    "TypeScript": "- Function: optional, default, rest (Có thể học nhanh)- Function overloading",
+    "React": "- Props là gì? Dùng khi nào- Chia component, DOM events",
+    "Deadline": 45848,
+    "Process": "Waiting"
+  },
+  {
+    "STT": 4,
+    "TypeScript": "- Class: khởi tạo, access modifier, readonly",
+    "React": "- Tạo project React bằng CRA- Folder structure- React 18 + nâng cấp",
+    "Deadline": 45849,
+    "Process": "Waiting"
+  },
+  {
+    "STT": "5",
+    "TypeScript": "- Inheritance, Getter/Setter, Static, Abstract class- Interface & Extend Interface",
+    "React": "- useState, TodoApp with useState",
+    "Deadline": 45850,
+    "Process": "Waiting"
+  },
+  {
+    "STT": 6,
+    "TypeScript": "- Type alias, Intersection type, Type guards (bắt buộc nắm kỹ)",
+    "React": "- useEffect cơ bản + dependencies, DOM events, Timer",
+    "Deadline": 45851,
+    "Process": "Waiting"
+  },
+  {
+    "STT": 7,
+    "TypeScript": "- Ôn toàn bộ TypeScript nâng cao + bài tập mini (Todo hoặc Counter với TS thuần)",
+    "React": "- useRef, useLayoutEffect- useReducer, Recap",
+    "Deadline": 45852,
+    "Process": "Waiting"
+  },
+  {
+    "STT": 8,
+    "TypeScript": "(Không học thêm TS)",
+    "React": "- useContext, kết hợp Context + Reducer- React.memo, useCallback, useMemo",
+    "Deadline": 45853,
+    "Process": "Waiting"
+  },
+  {
+    "STT": 9,
+    "TypeScript": "(Không học thêm TS)",
+    "React": "- CSS Modules, SCSS, classnames- Cài đặt và dùng Router (React Router V6)",
+    "Deadline": 45854,
+    "Process": "Waiting"
+  },
+  {
+    "STT": 10,
+    "TypeScript": "Tổng kết + Ôn toàn bộ TS & React: mini project TodoApp full",
+    "React": "Làm TodoApp hoặc BlogApp với React + TypeScript đầy đủ, router + styling",
+    "Deadline": 45855,
+    "Process": "Waiting"
+  }
+]
