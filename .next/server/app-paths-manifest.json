@@ -1,0 +1,7 @@
+{
+  "/api/notify/route": "app/api/notify/route.js",
+  "/api/tasks/route": "app/api/tasks/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/update-task/route": "app/api/update-task/route.js",
+  "/page": "app/page.js"
+}
