@@ -146,7 +146,7 @@ export default function Home() {
                       <td className="p-2 border">{task.name}</td>
                       <td className="p-2 border">{format(new Date(task.deadline), "yyyy-MM-dd")}</td>
                       <td className="p-2 border">
-                        <Select value={task.status} onValueChange={(value) => handleStatusChange(task.id, value)}>
+                        <Select value={task.status} onValueChange={(value: string) => handleStatusChange(task.id, value)}>
                           <SelectTrigger className="w-40">
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
