@@ -1,5 +1,5 @@
 export function Card({ children }: { children: React.ReactNode }) {
-  return <div className="rounded-xl border shadow p-4 bg-white">{children}</div>;
+  return <div className="border rounded-md p-4 shadow">{children}</div>;
 }
 
 export function CardContent({ children }: { children: React.ReactNode }) {
