@@ -3,26 +3,24 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectItem, SelectContent } from "@/components/ui/select";
-import { format, differenceInDays } from "date-fns";
+import { format } from "date-fns";
 
-const users = ["troycourselab-minhmaster", "troycourselab-vanh"];
-
-const statuses = [
-  "Complete",
-  "In process",
-  "Delay a day",
-  "Waiting",
-  "Warning",
-];
+// Hàm chuyển số ngày Excel -> chuỗi ngày yyyy-MM-dd
+function excelDateToISO(excelDate: number): string {
+  const jsDate = new Date((excelDate - 25569) * 86400 * 1000);
+  return jsDate.toISOString().split("T")[0];
+}
 
 interface Task {
-  id: number;
-  name: string;
-  deadline: string;
-  status: string;
-  user: string;
+  stt: number;
+  typescript: string;
+  react: string;
+  deadline: string; // yyyy-MM-dd
+  process: string;
+  note?: string;
 }
+
+const users = ["troycourselab-minhmaster", "troycourselab-vanh"];
 
 export default function Home() {
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
@@ -40,65 +38,19 @@ export default function Home() {
 
     fetch("/api/tasks")
       .then((res) => res.json())
-      .then((allTasks: Task[]) => {
-        const userTasks = allTasks.filter((task) => task.user === selectedUser);
-
-        const updated = userTasks.map((task) => {
-          const today = new Date();
-          const deadlineDate = new Date(task.deadline);
-
-          if (task.status === "Complete") return task;
-
-          const overdueDays = differenceInDays(today, deadlineDate);
-
-          let newStatus = task.status;
-          if (overdueDays === 1) newStatus = "Delay a day";
-          else if (overdueDays >= 2) newStatus = "Warning";
-
-          if (newStatus !== task.status) {
-            sendChangeMail(task.name, task.status, newStatus);
-            updateStatus(task.id, newStatus);
-          }
-
-          return { ...task, status: newStatus };
-        });
-
-        setTasks(updated);
+      .then((allTasks: any[]) => {
+        // Chuẩn hóa dữ liệu, convert deadline
+        const tasks: Task[] = allTasks.map((item) => ({
+          stt: Number(item.STT),
+          typescript: item.TypeScript,
+          react: item.React,
+          deadline: excelDateToISO(Number(item.Deadline)),
+          process: item.Process,
+          note: item.Note || "",
+        }));
+        setTasks(tasks);
       });
   }, [selectedUser]);
-
-  const handleStatusChange = (id: number, newStatus: string) => {
-    setTasks((prev) =>
-      prev.map((task) => {
-        if (task.id === id && task.status !== newStatus) {
-          sendChangeMail(task.name, task.status, newStatus);
-          updateStatus(task.id, newStatus);
-          return { ...task, status: newStatus };
-        }
-        return task;
-      })
-    );
-  };
-
-  const sendChangeMail = (task: string, oldStatus: string, newStatus: string) => {
-    fetch("/api/notify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        to: "your_email@example.com",
-        subject: `Status Change: ${task}`,
-        message: `${task} changed from ${oldStatus} to ${newStatus}`,
-      }),
-    });
-  };
-
-  const updateStatus = (id: number, newStatus: string) => {
-    fetch("/api/update-task", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, newStatus }),
-    });
-  };
 
   const handleLogin = (user: string) => {
     localStorage.setItem("loggedUser", user);
@@ -112,9 +64,8 @@ export default function Home() {
   };
 
   return (
-    <main className="p-4 max-w-4xl mx-auto">
+    <main className="p-4 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Project Progress Tracker</h1>
-
       {!selectedUser ? (
         <div className="space-y-2">
           <h2 className="text-lg">Đăng nhập người dùng:</h2>
@@ -128,35 +79,29 @@ export default function Home() {
             <h2 className="text-lg font-semibold">Xin chào, {selectedUser}</h2>
             <Button variant="destructive" onClick={handleLogout}>Đăng xuất</Button>
           </div>
-
           <Card>
             <CardContent className="overflow-auto p-4">
               <h2 className="text-lg font-semibold mb-2">Tiến độ công việc</h2>
               <table className="w-full border text-left">
                 <thead>
                   <tr className="bg-gray-100">
-                    <th className="p-2 border">Tên công việc</th>
+                    <th className="p-2 border">STT</th>
+                    <th className="p-2 border">TypeScript</th>
+                    <th className="p-2 border">React</th>
                     <th className="p-2 border">Deadline</th>
-                    <th className="p-2 border">Trạng thái</th>
+                    <th className="p-2 border">Process</th>
+                    <th className="p-2 border">Note</th>
                   </tr>
                 </thead>
                 <tbody>
                   {tasks.map((task) => (
-                    <tr key={task.id}>
-                      <td className="p-2 border">{task.name}</td>
-                      <td className="p-2 border">{format(new Date(task.deadline), "yyyy-MM-dd")}</td>
-                      <td className="p-2 border">
-                        <Select value={task.status} onValueChange={(value: string) => handleStatusChange(task.id, value)}>
-                          <SelectTrigger className="w-40">
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {statuses.map((status) => (
-                              <SelectItem key={status} value={status}>{status}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </td>
+                    <tr key={task.stt}>
+                      <td className="p-2 border">{task.stt}</td>
+                      <td className="p-2 border" style={{whiteSpace:"pre-line"}}>{task.typescript}</td>
+                      <td className="p-2 border" style={{whiteSpace:"pre-line"}}>{task.react}</td>
+                      <td className="p-2 border">{format(new Date(task.deadline), "d-MMM")}</td>
+                      <td className="p-2 border">{task.process}</td>
+                      <td className="p-2 border">{task.note || ""}</td>
                     </tr>
                   ))}
                 </tbody>
